@@ -1,38 +1,55 @@
 package com.queuemanagementsystem.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.queuemanagementsystem.Pojo.EndUserInfo;
 import com.queuemanagementsystem.Pojo.QueueEntity;
 import com.queuemanagementsystem.Pojo.CreateTokenForQueueRequest;
 import com.queuemanagementsystem.Pojo.RealtimeQueueInfo;
-import com.queuemanagementsystem.Repository.EndUserRepo;
-import com.queuemanagementsystem.Repository.OrganizationQueueRepo;
-import com.queuemanagementsystem.Repository.QueueRepo;
-import com.queuemanagementsystem.Repository.RealtimeQueueRepo;
+import com.queuemanagementsystem.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 @Service
 public class QueueManagementService {
-    private static QueueRepo queueRepo;
-
     private static OrganizationQueueRepo orgQueueRepo;
 
     private static EndUserRepo endUserRepo;
     private static RealtimeQueueRepo realtimeQueueRepo;
+
+    private static JDBCWrapper jdbcWrapper;
     @Autowired
-    public QueueManagementService(QueueRepo queueRepo, OrganizationQueueRepo orgQueueRepo, RealtimeQueueRepo realTimeQueueRepo,EndUserRepo endUserRepo){
-        this.queueRepo=queueRepo;
+    public QueueManagementService(OrganizationQueueRepo orgQueueRepo, RealtimeQueueRepo realTimeQueueRepo,EndUserRepo endUserRepo,JDBCWrapper jdbcWrapper){
         this.orgQueueRepo=orgQueueRepo;
         this.realtimeQueueRepo = realTimeQueueRepo;
         this.endUserRepo = endUserRepo;
+        this.jdbcWrapper=jdbcWrapper;
     }
 
-    public Map<String,Object> getQueuesOfAnUser(Integer user_id){
+    public List<QueueEntity> getQueuesOfAnUser(Integer user_id){
         //write a query and send it to JDBC wrapper
-        return null;
+        List<QueueEntity> queues=new LinkedList<>();
+        ObjectMapper mapper=new ObjectMapper();
+        try {
+            jdbcWrapper.openConnection();
+            ResultSet resultSet=jdbcWrapper.executeQuery("SELECT * FROM public.organizationqueue orgQueue " +
+                    "LEFT JOIN (SELECT * FROM public.enduser where user_id=?) eu " +
+                    "ON orgQueue.queue_id=eu.queue_id",user_id);
+            while(resultSet.next()){
+                QueueEntity queue=mapper.readValue(mapper.writeValueAsString(resultSet),QueueEntity.class);
+                queues.add(queue);
+            }
+            jdbcWrapper.closeConnection();
+        }
+        catch (Exception databaseException){
+
+        }
+        return queues;
     }
 
     public QueueEntity getQueueDetails(int queueId){

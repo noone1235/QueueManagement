@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Data
-@Table(name = "", schema = "")
+@Table(name = "enduser", schema = "public")
 public class EndUserInfo {
     @Id
     @Column(name = "user_id")

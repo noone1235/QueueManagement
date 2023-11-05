@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,9 +26,8 @@ public class QueueManagementController {
     }
 
     @GetMapping("/getQueuesOfAnUser")
-    public Map<String,Object> getQueuesOfAnUser(int user_id){
-        queueManagementService.getQueuesOfAnUser(user_id);
-        return null;
+    public List<QueueEntity> getQueuesOfAnUser(int user_id){
+        return queueManagementService.getQueuesOfAnUser(user_id);
     }
 
     @GetMapping("/getQueuesDetails")

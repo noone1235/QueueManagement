@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="",schema="")
+@Table(name="subgroup",schema="public")
 public class subGroupInfo {
 
     @Column(name="category_id")

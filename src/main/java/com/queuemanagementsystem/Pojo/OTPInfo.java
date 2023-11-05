@@ -5,7 +5,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
-@Table(name = "", schema = "")
+@Table(name = "otp", schema = "public")
 public class OTPInfo {
 
     @Column(name = "email")

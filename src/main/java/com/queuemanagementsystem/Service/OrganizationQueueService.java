@@ -37,9 +37,11 @@ public class OrganizationQueueService {
         organizationQueueRepo.deleteById(queueId);
     }
 
-    public void updateQueueStatus(boolean queueStatus){
+    public void updateQueueStatus(boolean queueStatus,String queueId){
         //write a update query
 //        organizationQueueRepo.updateByQOrQueueStatus(queueStatus);
+        organizationQueueRepo.updateQueueStatus(queueStatus,queueId);
+
     }
 
 }

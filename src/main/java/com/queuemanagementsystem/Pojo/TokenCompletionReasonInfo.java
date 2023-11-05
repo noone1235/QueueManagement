@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="",schema="")
+@Table(name="reasontable",schema="public")
 public class TokenCompletionReasonInfo {
 
     @Id

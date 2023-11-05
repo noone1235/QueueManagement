@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
-@Table(name = "", schema = "")
+@Table(name = "grouptable", schema = "public")
 public class GroupInfo {
 
     @Id

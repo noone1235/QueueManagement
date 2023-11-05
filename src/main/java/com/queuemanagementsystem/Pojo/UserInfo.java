@@ -11,7 +11,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 @Data
 @Entity
-@Table(name="",schema="")
+@Table(name="authentication",schema="public")
 public class UserInfo {
     @Id
     @Column(name="user_id")

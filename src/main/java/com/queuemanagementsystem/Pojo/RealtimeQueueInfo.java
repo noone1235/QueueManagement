@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "", schema = "")
+@Table(name = "realtimequeue", schema = "public")
 public class RealtimeQueueInfo {
 
     @Id

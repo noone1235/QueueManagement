@@ -20,4 +20,9 @@ public interface RealtimeQueueRepo extends JpaRepository<RealtimeQueueInfo,Integ
     @Transactional
     @Query("UPDATE RealtimeQueueInfo queueInfo SET queueInfo.highestTokenNumber=?1")
     void updateHighestTokenNumber(int highestTokenNumber);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE RealtimeQueueInfo queueInfo SET queueInfo.currentTokenNumber=queueInfo.currentTokenNumber+1 where queueInfo.queueId=?1")
+    void updateCurrentTokenNumber(int queueId);
 }
