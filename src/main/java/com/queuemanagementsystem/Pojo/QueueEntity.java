@@ -9,15 +9,15 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="",schema="")
-public class TokenCompletionReasonInfo {
-
+public class QueueEntity extends QueueInfo {
     @Id
-    @Column(name="reason_id")
-    public String reasonId;
+    @Column(name = "queue_id")
+    public int queueId;
 
-    @Column(name="token_number")
-    public String token_number;
+    @Column(name = "oraganization_id")
+    public int organizationId;
 
-    @Column(name="queue_id")
-    public String queueId;
+    @Column(name="queue_status")
+    public boolean queueStatus;
+
 }

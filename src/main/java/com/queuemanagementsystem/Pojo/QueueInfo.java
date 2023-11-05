@@ -1,23 +1,43 @@
 package com.queuemanagementsystem.Pojo;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Data;
 
+import java.sql.Timestamp;
+
 @Data
-@Entity
-@Table(name="",schema="")
 public class QueueInfo {
 
-    @Id
-    @Column(name="queue_id")
-    public String queueId;
+    @Column(name = "token_type")
+    public String tokenType;
 
-    @Column(name="organization_id")
-    public String organizationId;
+    @Column(name = "queue_name")
+    public String queueName;
 
-    @Column(name="current_token_number")
-    public String currentTokenNumber;
+    @Column(name = "queue_size")
+    public int queueSize;
+
+    @Column(name = "queue_start_time")
+    public Timestamp queueStartTime;
+
+    @Column(name = "queue_end_time")
+    public Timestamp queueEndTime;
+
+    @Column(name = "queue_frequency")
+    public String queueFrequency;
+
+    @Column(name = "token_reset")
+    public String tokenReset;
+
+    @Column(name = "created_by")
+    public String createdBy;
+
+    @Column(name = "created_date")
+    public Timestamp createdDate;
+
+    @Column(name = "modified_by")
+    public String modifiedBy;
+
+    @Column(name = "modified_date")
+    public Timestamp modifiedDate;
 }

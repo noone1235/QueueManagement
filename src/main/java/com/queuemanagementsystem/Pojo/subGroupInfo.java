@@ -9,15 +9,12 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="",schema="")
-public class TokenCompletionReasonInfo {
+public class subGroupInfo {
+
+    @Column(name="category_id")
+    public int categoryId;
 
     @Id
-    @Column(name="reason_id")
-    public String reasonId;
-
-    @Column(name="token_number")
-    public String token_number;
-
-    @Column(name="queue_id")
-    public String queueId;
+    @Column(name="sub_group_id")
+    public int sub_group_id;
 }
