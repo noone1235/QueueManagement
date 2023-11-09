@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EndUserRepo extends JpaRepository<EndUserInfo,Integer> {
 
-    @Query("SELECT MAX(EndUserInfo.tokenNumber) from EndUserInfo eu where eu.queueId=?1 ")
+    @Query("SELECT MAX(eu.tokenNumber) from EndUserInfo eu where eu.queueId=?1 ")
     int getHighestTokenNumber(int queueId);
 }

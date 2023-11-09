@@ -17,4 +17,7 @@ public class subGroupInfo {
     @Id
     @Column(name="sub_group_id")
     public int sub_group_id;
+
+    @Column(name="subGroupName")
+    public String subGroupName;
 }

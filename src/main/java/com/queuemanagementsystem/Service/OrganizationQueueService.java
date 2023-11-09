@@ -1,8 +1,11 @@
 package com.queuemanagementsystem.Service;
 
 import com.queuemanagementsystem.Pojo.CreateQueueRequest;
+import com.queuemanagementsystem.Pojo.GroupInfo;
 import com.queuemanagementsystem.Pojo.QueueEntity;
+import com.queuemanagementsystem.Repository.GroupRepo;
 import com.queuemanagementsystem.Repository.OrganizationQueueRepo;
+import com.queuemanagementsystem.Repository.SubGroupRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +17,29 @@ import java.util.Map;
 public class OrganizationQueueService {
     @Autowired
     OrganizationQueueRepo organizationQueueRepo;
+
+    @Autowired
+    GroupRepo groupRepo;
+
+    @Autowired
+    SubGroupRepo subGroupRepo;
+
     public void createQueueInfo(CreateQueueRequest queueRequest){
+
+
         QueueEntity queueInfo=new QueueEntity();
         queueInfo.setQueueEndTime(queueRequest.getQueueEndTime());
         queueInfo.setQueueStatus(true);
+        queueInfo.setQueueSize(queueRequest.getQueueSize());
+        queueInfo.setQueueName(queueRequest.getQueueName());
+        queueInfo.setTokenType(queueRequest.getTokenType());
+        //queueInfo.setGroupId(queueRequest.getTokenGroup());
+        queueInfo.setQueueSize(queueRequest.getQueueSize());
+        queueInfo.setQueueSize(queueRequest.getQueueSize());
+
+        GroupInfo grpInfo =new GroupInfo();
+        grpInfo.setGroupName(queueRequest.getTokenGroup());
+        groupRepo.save(grpInfo);
 //        queueInfo.setTokenType();
         //set all the fields and save the entity to database
     }

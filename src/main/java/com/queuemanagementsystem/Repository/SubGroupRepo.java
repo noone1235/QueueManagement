@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface subGroupRepo extends JpaRepository<subGroupInfo,Integer> {
+public interface SubGroupRepo extends JpaRepository<subGroupInfo,Integer> {
 }

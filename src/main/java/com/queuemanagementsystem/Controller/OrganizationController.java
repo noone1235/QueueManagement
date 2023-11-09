@@ -14,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@RequestMapping("/organization")
 public class OrganizationController {
     //QueueAPIS -- Organization level
     @Autowired

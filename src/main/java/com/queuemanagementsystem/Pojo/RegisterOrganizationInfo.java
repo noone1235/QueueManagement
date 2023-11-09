@@ -9,7 +9,5 @@ public class RegisterOrganizationInfo {
     private int phoneNumber;
     private String organizationName;
     private String email;
-    private Integer number;
     private String password;
-
 }

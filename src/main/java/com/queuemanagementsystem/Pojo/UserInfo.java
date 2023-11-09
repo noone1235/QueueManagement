@@ -20,10 +20,6 @@ public class UserInfo {
     private String firstName;
     @Column(name="last_name")
     private String lastName;
-    @Column(name="organization_id")
-    private String organizationId;
-    @Column(name="organization_name")
-    private String organizationName;
     @Column(name="user_role")
     private UserRole userRole;
     @Column(name="user_password")
