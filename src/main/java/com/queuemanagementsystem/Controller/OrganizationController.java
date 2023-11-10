@@ -1,6 +1,7 @@
 package com.queuemanagementsystem.Controller;
 
 import com.queuemanagementsystem.Pojo.CreateQueueRequest;
+import com.queuemanagementsystem.Pojo.QueueEntity;
 import com.queuemanagementsystem.Pojo.RealtimeQueueInfo;
 import com.queuemanagementsystem.Repository.EndUserRepo;
 import com.queuemanagementsystem.Repository.OrganizationQueueRepo;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -41,7 +43,7 @@ public class OrganizationController {
         return true;
     }
     @GetMapping("/getActiveQueues")
-    public Map<String,Object> getActiveQueues() throws Exception {
+    public List<QueueEntity> getActiveQueues() throws Exception {
         try{
             return organizationQueueService.getActiveQueues();
         }
@@ -104,9 +106,10 @@ public class OrganizationController {
             //calls token as specified meaning create a real time Queue table
             RealtimeQueueInfo realtimeQueueInfo=new RealtimeQueueInfo();
             realtimeQueueInfo.setQueueId(Integer.parseInt(queueInfo.get("queueId")+""));
-            realtimeQueueInfo.setOrganizationId(Integer.parseInt(queueInfo.get("organizationId")+""));
+            //realtimeQueueInfo.setOrganizationId(Integer.parseInt(queueInfo.get("organizationId")+""));
             realtimeQueueInfo.setCurrentTokenNumber(Integer.parseInt(queueInfo.get("currenTokenNumber")+""));
-            realtimeQueueInfo.setHighestTokenNumber(endUserRepo.getHighestTokenNumber(Integer.parseInt(queueInfo.get("queueId")+"") ));
+            Integer tokenNumber=(endUserRepo.getHighestTokenNumber(Integer.parseInt(queueInfo.get("queueId")+"")));
+            realtimeQueueInfo.setHighestTokenNumber((tokenNumber==null) ?1:Integer.parseInt(tokenNumber.toString()));
             realtimeQueueRepo.save(realtimeQueueInfo);
         }
         catch(Exception e){
@@ -117,7 +120,7 @@ public class OrganizationController {
 
     @PostMapping("/markAsProcessed")
     public boolean markAsProcessed(@RequestBody Map<String,Object> markAsProcessedRequest){
-        //should update the real time queue table , reason table
+        //should update the real time queue table
         realtimeQueueRepo.updateCurrentTokenNumber(Integer.parseInt(markAsProcessedRequest.get("queueId")+""));
         //check exception case scenarios
         return true;

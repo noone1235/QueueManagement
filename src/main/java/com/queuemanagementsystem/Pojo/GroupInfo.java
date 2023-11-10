@@ -1,17 +1,15 @@
 package com.queuemanagementsystem.Pojo;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "grouptable", schema = "public")
+@Table(name = "group_table", schema = "public")
 public class GroupInfo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id")
     private int groupId;
 

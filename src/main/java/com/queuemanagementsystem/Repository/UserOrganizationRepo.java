@@ -1,10 +1,9 @@
 package com.queuemanagementsystem.Repository;
 
-import com.queuemanagementsystem.Pojo.SubGroupInfo;
+import com.queuemanagementsystem.Pojo.UserOrganization;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
-public interface SubGroupRepo extends JpaRepository<SubGroupInfo,Integer> {
+public interface UserOrganizationRepo extends JpaRepository<UserOrganization,Integer> {
 }

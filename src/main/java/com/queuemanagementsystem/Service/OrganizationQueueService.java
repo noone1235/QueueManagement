@@ -1,8 +1,6 @@
 package com.queuemanagementsystem.Service;
 
-import com.queuemanagementsystem.Pojo.CreateQueueRequest;
-import com.queuemanagementsystem.Pojo.GroupInfo;
-import com.queuemanagementsystem.Pojo.QueueEntity;
+import com.queuemanagementsystem.Pojo.*;
 import com.queuemanagementsystem.Repository.GroupRepo;
 import com.queuemanagementsystem.Repository.OrganizationQueueRepo;
 import com.queuemanagementsystem.Repository.SubGroupRepo;
@@ -26,30 +24,34 @@ public class OrganizationQueueService {
 
     public void createQueueInfo(CreateQueueRequest queueRequest){
 
+        GroupInfo grpInfo =new GroupInfo();
+        grpInfo.setGroupName(queueRequest.getTokenGroup());
+        grpInfo.setOrganizationId(queueRequest.getOrganizationId());
+        GroupInfo grpInfo1=groupRepo.save(grpInfo);
+
+        SubGroupInfo subGroupInfo =new SubGroupInfo();
+        subGroupInfo.setGroupId(grpInfo.getGroupId());
+        subGroupInfo.setSubGroupName(queueRequest.getTokenSubGroup());
+        SubGroupInfo subGroupInfo1=subGroupRepo.save(subGroupInfo);
 
         QueueEntity queueInfo=new QueueEntity();
         queueInfo.setQueueEndTime(queueRequest.getQueueEndTime());
         queueInfo.setQueueStatus(true);
+        queueInfo.setQueueId(grpInfo1.getGroupId());
+        queueInfo.setSubGroupId(subGroupInfo1.getSub_group_id());
         queueInfo.setQueueSize(queueRequest.getQueueSize());
         queueInfo.setQueueName(queueRequest.getQueueName());
         queueInfo.setTokenType(queueRequest.getTokenType());
-        //queueInfo.setGroupId(queueRequest.getTokenGroup());
         queueInfo.setQueueSize(queueRequest.getQueueSize());
         queueInfo.setQueueSize(queueRequest.getQueueSize());
+        organizationQueueRepo.save(queueInfo);
 
-        GroupInfo grpInfo =new GroupInfo();
-        grpInfo.setGroupName(queueRequest.getTokenGroup());
-        groupRepo.save(grpInfo);
-//        queueInfo.setTokenType();
-        //set all the fields and save the entity to database
     }
 
-    public Map<String,Object> getActiveQueues(){
-        Map<String,Object> getQueueResponse=new HashMap<>();
-        List<QueueEntity> activeQueues=organizationQueueRepo.findAllByQueueStatusIsTrue();
+    public List<QueueEntity> getActiveQueues(){
+        List<QueueEntity> activeQueues=organizationQueueRepo.findByQueueStatus(true);
         //fetch all memebers of the queue and add the key to getQueueResponse
-
-        return getQueueResponse;
+        return activeQueues;
     }
     public void updateQueueInfo(CreateQueueRequest queueRequest){
         //set all fields and update the entity to database, check for edge cases in this scenario
@@ -60,10 +62,7 @@ public class OrganizationQueueService {
     }
 
     public void updateQueueStatus(boolean queueStatus,String queueId){
-        //write a update query
-//        organizationQueueRepo.updateByQOrQueueStatus(queueStatus);
-        organizationQueueRepo.updateQueueStatus(queueStatus,queueId);
-
+        organizationQueueRepo.updateQueueStatus(queueStatus, queueId);
     }
 
 }

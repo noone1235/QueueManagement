@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface OrganizationQueueRepo extends JpaRepository<QueueEntity,Integer> {
-    List<QueueEntity> findAllByQueueStatusIsTrue();
+    List<QueueEntity> findByQueueStatus(boolean status);
 
     @Modifying
     @Transactional

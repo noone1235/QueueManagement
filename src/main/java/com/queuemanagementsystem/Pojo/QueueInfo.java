@@ -2,11 +2,13 @@ package com.queuemanagementsystem.Pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 
 import java.sql.Timestamp;
 
 @Data
+@MappedSuperclass
 public class QueueInfo {
 
     @JsonProperty("token_type")
@@ -31,7 +33,7 @@ public class QueueInfo {
 
     @JsonProperty("queue_frequency")
     @Column(name = "queue_frequency")
-    public String queueFrequency;
+    public int queueFrequency;
 
     @JsonProperty("token_reset")
     @Column(name = "token_reset")

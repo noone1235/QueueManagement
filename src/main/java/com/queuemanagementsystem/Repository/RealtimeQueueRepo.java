@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface RealtimeQueueRepo extends JpaRepository<RealtimeQueueInfo,Integer> {
 
-    Optional<RealtimeQueueInfo> findByQueueIdAndOrganizationId(Integer queueId, Integer organizationId);
+    Optional<RealtimeQueueInfo> findByQueueId(Integer queueId);
 
     @Modifying
     @Transactional

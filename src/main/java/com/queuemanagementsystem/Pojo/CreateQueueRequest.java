@@ -9,6 +9,7 @@ public class CreateQueueRequest extends QueueInfo {
         super();
     }
 
+    public int organizationId;
     private String tokenGroup;
     private String tokenSubGroup;
 

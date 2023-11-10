@@ -1,20 +1,18 @@
 package com.queuemanagementsystem.Pojo;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name="subgroup",schema="public")
-public class subGroupInfo {
+@Table(name="sub_group",schema="public")
+public class SubGroupInfo {
 
     @Column(name="category_id")
-    public int categoryId;
+    public int groupId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="sub_group_id")
     public int sub_group_id;
 

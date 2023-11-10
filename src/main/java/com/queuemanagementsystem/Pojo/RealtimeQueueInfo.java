@@ -8,15 +8,12 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "realtimequeue", schema = "public")
+@Table(name = "real_time_queue", schema = "public")
 public class RealtimeQueueInfo {
 
     @Id
     @Column(name = "queue_id")
     public int queueId;
-
-    @Column(name = "organization_id")
-    public int organizationId;
 
     @Column(name = "current_token_number")
     public int currentTokenNumber;
