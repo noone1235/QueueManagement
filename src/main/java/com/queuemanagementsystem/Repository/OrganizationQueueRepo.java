@@ -9,7 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface OrganizationQueueRepo extends JpaRepository<QueueEntity,Integer> {
-    List<QueueEntity> findByQueueStatus(boolean status);
+    @Query("SELECT queueEntity FROM QueueEntity queueEntity WHERE queueEntity.organizationId=?2 AND queueEntity.queueStatus=?1")
+    List<QueueEntity> findByQueueStatusAndOrganizationId(boolean status,Integer organizationId);
 
     @Modifying
     @Transactional

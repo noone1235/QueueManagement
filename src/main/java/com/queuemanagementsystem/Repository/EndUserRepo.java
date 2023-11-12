@@ -7,10 +7,16 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public interface EndUserRepo extends JpaRepository<EndUserInfo,Integer> {
 
     @Query("SELECT MAX(eu.tokenNumber) from EndUserInfo eu where eu.queueId=?1 ")
     Integer getHighestTokenNumber(int queueId);
+
+    List<EndUserInfo> findByQueueId(Integer queueId);
+
+    List<EndUserInfo> findAllByQueueId(Integer queueId);
 }

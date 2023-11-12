@@ -1,6 +1,7 @@
 package com.queuemanagementsystem.Controller;
 
 import com.queuemanagementsystem.Pojo.CreateQueueRequest;
+import com.queuemanagementsystem.Pojo.EndUserInfo;
 import com.queuemanagementsystem.Pojo.QueueEntity;
 import com.queuemanagementsystem.Pojo.RealtimeQueueInfo;
 import com.queuemanagementsystem.Repository.EndUserRepo;
@@ -11,8 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -31,6 +34,16 @@ public class OrganizationController {
     @Autowired
     OrganizationQueueRepo organizationQueueRepo;
 
+    @GetMapping("/getActiveQueues")
+    public List<QueueEntity> getActiveQueues(@RequestParam Integer organizationId) throws Exception {
+        try{
+            return organizationQueueService.getActiveQueues(organizationId);
+        }
+        catch(Exception databaseException) {
+            log.error(databaseException.getLocalizedMessage(), databaseException);
+            throw new Exception("DataBase Exception");
+        }
+    }
     @PostMapping("/createQueueInfo")
     public boolean createQueueInfo(@RequestBody CreateQueueRequest queueInfo) throws Exception {
         try{
@@ -41,16 +54,6 @@ public class OrganizationController {
             throw new Exception("DataBase Exception");
         }
         return true;
-    }
-    @GetMapping("/getActiveQueues")
-    public List<QueueEntity> getActiveQueues() throws Exception {
-        try{
-            return organizationQueueService.getActiveQueues();
-        }
-        catch(Exception databaseException) {
-            log.error(databaseException.getLocalizedMessage(), databaseException);
-            throw new Exception("DataBase Exception");
-        }
     }
     @PutMapping("/updateQueueInfo")
     public boolean updateQueueInfo(@RequestBody CreateQueueRequest queueInfo) throws Exception {
@@ -122,24 +125,35 @@ public class OrganizationController {
     public boolean markAsProcessed(@RequestBody Map<String,Object> markAsProcessedRequest){
         //should update the real time queue table
         realtimeQueueRepo.updateCurrentTokenNumber(Integer.parseInt(markAsProcessedRequest.get("queueId")+""));
+
         //check exception case scenarios
         return true;
     }
 
     //end the queue if the queue has not moved for 2hrs
     //Also consider the scenario where server crashes or the application crashes
+    //This api should return a message to all the users of the queue that it got updated for the next queue session.
+    //endUsers=endUserRepo.findAllByQueueId(queueId);
+    //send a request to app users based on user_ids
     @PostMapping("/endQueueForCurrent")
-    public boolean endQueueForCurrent(){
-        try {
-            //update endUserTable
-            //update all the end user Info, make the current token number as 1 and so on
-            //RealTimeQueue all gets updated accordingly
-            //This api should return a message to all the users of the queue that it got updated for the next queue session.
+    public String endQueueForCurrent(@RequestParam int queueId,@RequestParam Integer currentTokenNumber){
 
+        List<EndUserInfo> endUsers=new ArrayList<>();
+        try {
+            RealtimeQueueInfo queueInfo=realtimeQueueRepo.findByQueueId(queueId).get();
+            if(queueInfo.getHighestTokenNumber()>=currentTokenNumber){
+                realtimeQueueRepo.updateCurrentTokenNumber(queueId);
+
+            }
+            //mark all other tokens as proc3essed and disable the queue
         }
-        catch(Exception databaseException){
-            //
+        catch(Exception exception){
+            log.error(exception.getLocalizedMessage(),exception);
+            throw exception;
         }
-        return false;
+        return "Success";
     }
+
+
+
 }

@@ -40,7 +40,7 @@ public class QueueManagementService {
 
 
     public boolean emailValidation(OTPInfo otpInfo){
-        OTPInfo dbOtpInfo=otpRepo.getReferenceById(otpInfo.getEmail());
+        OTPInfo dbOtpInfo=otpRepo.getReferenceById(otpInfo.getOtpId());
         return dbOtpInfo.getOTP().equals(otpInfo.getOTP());
     }
 

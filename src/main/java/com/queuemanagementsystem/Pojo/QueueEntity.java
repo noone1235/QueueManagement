@@ -30,7 +30,7 @@ public class QueueEntity extends QueueInfo {
     @Column(name = "sub_group_id")
     public int subGroupId;
 
-    @Column(name="queue_status")
+    @Column(name="queue_is_active")
     public boolean queueStatus;
 
 }

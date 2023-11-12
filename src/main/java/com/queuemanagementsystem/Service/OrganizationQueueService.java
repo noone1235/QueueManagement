@@ -38,6 +38,7 @@ public class OrganizationQueueService {
         queueInfo.setQueueEndTime(queueRequest.getQueueEndTime());
         queueInfo.setQueueStatus(true);
         queueInfo.setQueueId(grpInfo1.getGroupId());
+        queueInfo.setGroupId(grpInfo.getGroupId());
         queueInfo.setSubGroupId(subGroupInfo1.getSub_group_id());
         queueInfo.setQueueSize(queueRequest.getQueueSize());
         queueInfo.setQueueName(queueRequest.getQueueName());
@@ -48,13 +49,14 @@ public class OrganizationQueueService {
 
     }
 
-    public List<QueueEntity> getActiveQueues(){
-        List<QueueEntity> activeQueues=organizationQueueRepo.findByQueueStatus(true);
+    public List<QueueEntity> getActiveQueues(Integer organizationId){
+        List<QueueEntity> activeQueues=organizationQueueRepo.findByQueueStatusAndOrganizationId(true,organizationId);
         //fetch all memebers of the queue and add the key to getQueueResponse
         return activeQueues;
     }
     public void updateQueueInfo(CreateQueueRequest queueRequest){
         //set all fields and update the entity to database, check for edge cases in this scenario
+
     }
     public void deleteQueueInfo(int queueId){
         //delete queue bases on id return success or failure
